@@ -1,0 +1,19 @@
+.profile__photo-add {
+  background-image: url(../../../images/profileAddphoto.svg);
+  width: 120px;
+  height: 120px;
+  background-color: transparent;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  opacity: 0;
+  border: none;
+  cursor: pointer;
+  font-size: 0;
+  position: absolute;
+  transition: opacity .2s ease-in;
+}
+
+.profile__photo-add:hover {
+  opacity: 0.6;
+  background-color: black;
+}
