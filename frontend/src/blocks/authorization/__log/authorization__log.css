@@ -1,0 +1,16 @@
+.authorization__log {
+    background-color: initial;
+    border: none;
+    color: inherit;
+    cursor: pointer;
+    font: inherit;
+    font-size: 14px;
+    line-height: 17px;
+    margin-top: 15px;
+    padding: 0;
+    transition: .3s linear;
+}
+
+.authorization__log:hover {
+    opacity: 0.8;
+}
