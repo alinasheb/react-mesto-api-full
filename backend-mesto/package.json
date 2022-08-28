@@ -1,0 +1,44 @@
+{
+  "name": "express-mesto-gha",
+  "version": "1.0.0",
+  "description": "[![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-13-sprint.yml) [![Tests](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml/badge.svg)](https://github.com/yandex-praktikum/express-mesto-gha/actions/workflows/tests-14-sprint.yml)",
+  "main": "app.js",
+  "scripts": {
+    "lint": "npx eslint .",
+    "dev": "nodemon app.js",
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alinasheb/express-mesto-gha.git"
+  },
+  "keywords": [
+    "яндекс практикум"
+  ],
+  "author": "Alina Sheb",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alinasheb/express-mesto-gha/issues"
+  },
+  "homepage": "https://https://github.com/alinasheb/express-mesto-gha#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.0",
+    "celebrate": "^15.0.1",
+    "express": "^4.18.1",
+    "express-rate-limit": "^6.5.1",
+    "express-winston": "^4.2.0",
+    "helmet": "^5.1.1",
+    "jsonwebtoken": "^8.5.1",
+    "limiter": "^2.1.0",
+    "mongoose": "^6.5.2",
+    "validator": "^13.7.0",
+    "winston": "^3.8.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.21.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "nodemon": "^2.0.19"
+  }
+}
