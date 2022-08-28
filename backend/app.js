@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const { errors } = require('celebrate');
 const helmet = require('helmet');
 const {
@@ -27,6 +28,7 @@ app.use(limiter);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(requestLogger);
+app.use(cors());
 
 app.post('/signin', loginValidation, login);
 app.post('/signup', createUserValidation, createUser);
@@ -40,7 +42,7 @@ mongoose.connect('mongodb://localhost:27017/mestodb', {
   useNewUrlParser: true,
 });
 
-app.use(errorLogger)
+app.use(errorLogger);
 
 app.use(errors());
 
