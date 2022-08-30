@@ -1,4 +1,6 @@
-const baseUrl = 'http://localhost:3000';
+const baseUrl = 'https://api.travel.story.nomoredomains.sbs';
+
+//const baseUrl = 'http://localhost:3000';
 
 const getResponseData = (res) => {
     if (res.ok) {
