@@ -5,10 +5,11 @@ const BadRequest = require('../errors/BadRequest');
 
 // получить карточки
 const getCards = (req, res, next) => {
-  Card.find({})
+  Card.find({}).sort({ createdAt: -1 })
     .then((cards) => res.send(cards))
     .catch(next);
 };
+// Card.find({})
 
 // создать карточку
 const createCard = (req, res, next) => {

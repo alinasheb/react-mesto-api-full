@@ -6,6 +6,7 @@ class Api {
 
   }
 
+
   getInitialCard() {
     return fetch(`${this._url}/cards`, {
       method: 'GET',
@@ -68,8 +69,8 @@ setAvatar(data) {
     });
   }
 
-  deleteCard(id) {
-    return fetch(`${this._url}/cards/${id}`, {
+  deleteCard(cardId) {
+    return fetch(`${this._url}/cards/${cardId}`, {
       method: 'DELETE',
       headers: this._headers,
     }).then((res) => {
@@ -79,7 +80,7 @@ setAvatar(data) {
 
 
   changeLikeCardStatus(cardId, isLiked) {
-    return fetch(`${this._url}/cards/likes/${cardId}`, {
+    return fetch(`${this._url}/cards/${cardId}/likes`, {
       method: isLiked ? 'PUT' : 'DELETE',
       headers: this._headers,
     }).then((res) => {
@@ -105,10 +106,12 @@ setAvatar(data) {
 }
 
 const api = new Api ({
-  url: "https://mesto.nomoreparties.co/v1/cohort-41",
+  url: "http://localhost:3000",
+  //url: "https://mesto.nomoreparties.co/v1/cohort-41",
   headers: {
-    authorization: 'cc692a39-3e91-4f31-81a0-56c5cbc20e10',
-    "Content-type": "application/json"
+   // authorization: 'cc692a39-3e91-4f31-81a0-56c5cbc20e10',
+   Authorization: `Bearer ${localStorage.getItem('jwt')}`,
+    "Content-type": "application/json",
   }
 });
 

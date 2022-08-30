@@ -50,33 +50,14 @@ function App() {
 
   const history = useHistory();
 
-  useEffect(() => {
-    api
-      .getInitialCard()
-      .then((res) => {
-        setCards(res);
-      })
-      .catch((err) => console.error(err));
-    api
-      .getUserInfo()
-      .then((res) => {
-        setCurrentUser(res);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  useEffect(() => {
-    tokenCheck();
-  }, []);
-
   const tokenCheck = () => {
     const jwt = localStorage.getItem("jwt");
     if (jwt) {
-      getData(jwt)
+      getData(jwt) //jwt на токен res на data
         .then((res) => {
           if (res) {
             setLoginIn(true);
-            setUserLoginData(res.data.email);
+            setUserLoginData(res.email);
           }
         })
         .catch((err) => console.log(err));
@@ -84,10 +65,33 @@ function App() {
   };
 
   useEffect(() => {
+    tokenCheck();
+  }, []);
+
+  useEffect(() => {
+    api
+    .getInitialCard()
+      .then((res) => { //был res
+        setCards(res); 
+      })
+        .catch((err) => console.error(err));
+    api
+      .getUserInfo()
+      .then((res) => {
+        setCurrentUser(res); //был res
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
+  
+
+
+
+  useEffect(() => {
     if (loginIn) {
       history.push("/");
     }
-  }, [loginIn]);
+  }, [history, loginIn]);
 
   //обработчики
   //редактирование профиля
@@ -125,7 +129,7 @@ function App() {
   //лайк карточки
   function handleCardLike(card) {
     // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some((i) => i._id === currentUser._id);
+    const isLiked = card.likes.some((i) => i === currentUser._id); 
 
     // Отправляем запрос в API и получаем обновлённые данные карточки
     api
@@ -146,7 +150,7 @@ function App() {
         setCards((cards) => cards.filter((item) => item._id !== card._id));
       })
       .catch((err) => console.log(err));
-  }
+  } 
 
   //редактирование данных пользователя
   function handleUpdateUser(data) {
