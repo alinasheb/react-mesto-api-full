@@ -4,5 +4,6 @@
 Пожалуйста, прикрепите в это описание ссылку на сайт, размещенный на Яндекс.Облаке.
 
 IP: 62.84.112.166
+
 бэкенд: http://api.travel.story.nomoredomains.sbs/
 фронтенд: http://travel.story.nomoredomains.sbs/
