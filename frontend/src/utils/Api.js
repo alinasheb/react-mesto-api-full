@@ -106,7 +106,7 @@ setAvatar(data) {
 }
 
 const api = new Api ({
-  url: 'https://api.travel.story.nomoredomains.sbs/',
+  url: "https://api.travel.story.nomoredomains.sbs/",
   //url: "http://localhost:3000",
   //url: "https://mesto.nomoreparties.co/v1/cohort-41",
   headers: {
