@@ -1,6 +1,6 @@
-const baseUrl = 'https://api.travel.story.nomoredomains.sbs';
+//const baseUrl = 'https://api.travel.story.nomoredomains.sbs';
 
-//const baseUrl = 'http://localhost:3000';
+export const baseUrl = 'http://localhost:3000';
 
 const getResponseData = (res) => {
     if (res.ok) {
@@ -8,13 +8,14 @@ const getResponseData = (res) => {
     } else {
       return Promise.reject(`Ошибка:${res.status}`);
     }
-  }
+  };
 
+  
   export const register = (email, password) => {
     return fetch (`${baseUrl}/signup`, {
         method: 'POST' ,
         headers: {
-            "Content-Type": "application/json",
+           "Content-Type": "application/json",
         } ,
         body:  JSON.stringify({email, password})
     })
@@ -33,16 +34,14 @@ const getResponseData = (res) => {
         .then((res) => getResponseData(res));
   };
 
-  export const getData = (token) => {
-    return fetch (`${baseUrl}/users/me`, {
-        method: 'GET' ,
-        headers: {
-            "Content-Type": "application/json",
-            "Authorization" : `Bearer ${token}`
-        } ,
-        
-    })
-        .then((res) => getResponseData(res));
-  };
 
+export const getData = (token) => {
+  return fetch(`${baseUrl}/users/me`, {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+  }).then((res) => getResponseData(res));
+};
 

@@ -1,7 +1,7 @@
-const { NODE_ENV, JWT_SECRET } = process.env;
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const User = require('../models/user');
+const { JWT_STORAGE_TIME, SALT_LENGTH, JWT_SECRET } = require('../configs');
 
 const NotFound = require('../errors/NotFound');
 const ConflictingRequest = require('../errors/ConflictingRequest');
@@ -16,7 +16,8 @@ const getUsers = (req, res, next) => {
 
 // получить пользователя по id
 const getUserById = (req, res, next) => {
-  User.findById(req.params.userId)
+  const { id } = req.params;
+  User.findById(id)
     .orFail(() => {
       throw new NotFound('Пользователь с таким id не найден');
     })
@@ -39,7 +40,7 @@ const createUser = (req, res, next) => {
     email,
     password,
   } = req.body;
-  bcrypt.hash(password, 10)
+  bcrypt.hash(password, SALT_LENGTH)
     .then((hash) => User.create({
       name,
       about,
@@ -97,11 +98,7 @@ const login = (req, res, next) => {
 
   return User.findUserByCredentials(email, password)
     .then((user) => {
-      const token = jwt.sign(
-        { _id: user._id },
-        NODE_ENV === 'production' ? JWT_SECRET : 'some-secret-key',
-        { expiresIn: '7d' },
-      );
+      const token = jwt.sign({ _id: user._id }, JWT_SECRET, { expiresIn: JWT_STORAGE_TIME });
       res.send({ token });
     })
     .catch(next);

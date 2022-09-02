@@ -9,7 +9,6 @@ const getCards = (req, res, next) => {
     .then((cards) => res.send(cards))
     .catch(next);
 };
-// Card.find({})
 
 // создать карточку
 const createCard = (req, res, next) => {

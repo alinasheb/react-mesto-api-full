@@ -1,4 +1,3 @@
-
 class Api {
   constructor(options) {
     this._url = options.url;
@@ -6,35 +5,35 @@ class Api {
 
   }
 
+  _getAuthHeader() {
+    const jwt = localStorage.getItem('jwt');
+    return jwt ? { Authorization: `Bearer ${jwt}` } : {};
+  }
+
 
   getInitialCard() {
-    return fetch(`${this._url}/cards`, {
+    return fetch(`${this._url}cards`, {
       method: 'GET',
-      headers: this._headers,
+      headers: { ...this._headers, ...this._getAuthHeader() },
     }).then((res) => {
       return this.getResponseData(res);
     });
   }
 
   getUserInfo() {
-    return fetch(`${this._url}/users/me`, {
+    return fetch(`${this._url}users/me`, {
       method: 'GET',
-      headers: this._headers,
+      headers: { ...this._headers, ...this._getAuthHeader() },
     }).then((res) => {
       return this.getResponseData(res);
   });
 }
 
-getInitialData() {
-  return Promise.all([this.getUserInfo(), this.getInitialCard()]);
-}
-
-
 
 setUserInfo(data) {
-  return fetch(`${this._url}/users/me`, {
+  return fetch(`${this._url}users/me`, {
     method: 'PATCH',
-    headers: this._headers,
+    headers: { ...this._headers, ...this._getAuthHeader() },
     body: JSON.stringify({
       name: data.name,
       about: data.about,
@@ -45,9 +44,9 @@ setUserInfo(data) {
 }
 
 setAvatar(data) {
-  return fetch(`${this._url}/users/me/avatar`, {
+  return fetch(`${this._url}users/me/avatar`, {
     method: 'PATCH',
-    headers: this._headers,
+    headers: { ...this._headers, ...this._getAuthHeader() },
     body: JSON.stringify({
       avatar: data,
     }),
@@ -57,9 +56,9 @@ setAvatar(data) {
 }
 
   postNewCard(data) {
-    return fetch(`${this._url}/cards`, {
+    return fetch(`${this._url}cards`, {
       method: 'POST',
-      headers: this._headers,
+      headers: { ...this._headers, ...this._getAuthHeader() },
       body: JSON.stringify({
         name: data.name,
         link: data.link,
@@ -70,31 +69,26 @@ setAvatar(data) {
   }
 
   deleteCard(cardId) {
-    return fetch(`${this._url}/cards/${cardId}`, {
+    return fetch(`${this._url}cards/${cardId}`, {
       method: 'DELETE',
-      headers: this._headers,
+      headers: { ...this._headers, ...this._getAuthHeader() },
     }).then((res) => {
       return this.getResponseData(res);
     });
   }
 
 
-  changeLikeCardStatus(cardId, isLiked) {
-    return fetch(`${this._url}/cards/${cardId}/likes`, {
+  changeLikeCardStatus(id, isLiked) {
+    return fetch(`${this._url}cards/${id}/likes`, {
       method: isLiked ? 'PUT' : 'DELETE',
-      headers: this._headers,
+      headers: { ...this._headers, ...this._getAuthHeader() },
     }).then((res) => {
       return this.getResponseData(res);
     });
   }
 
 
-  setToken(token) {
-    this._headers = {
-      ...this._headers,
-      Authorization: `Bearer ${token}`,
-    }
-  }
+  
 
   getResponseData(res) {
     if (res.ok) {
@@ -106,18 +100,12 @@ setAvatar(data) {
 }
 
 const api = new Api ({
-  url: 'https://api.travel.story.nomoredomains.sbs/',
-  //url: "http://localhost:3000",
-  //url: "https://mesto.nomoreparties.co/v1/cohort-41",
+  //url: 'https://api.travel.story.nomoredomains.sbs/',
+  url: "http://localhost:3000/",
   headers: {
-   // authorization: 'cc692a39-3e91-4f31-81a0-56c5cbc20e10',
-   Authorization: `Bearer ${localStorage.getItem('jwt')}`,
     "Content-type": "application/json",
   }
 });
-
-
-
 
 
 export default api;

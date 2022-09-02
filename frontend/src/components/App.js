@@ -7,7 +7,6 @@ import {
   withRouter,
 } from "react-router-dom";
 import ProtectedRoute from "./ProtectedRoute";
-import { register, login, getData } from "../utils/auth";
 import CurrentUserContext from "../contexts/CurrentUserContext.js";
 
 import Main from "./Main.js";
@@ -22,6 +21,7 @@ import Register from "./Register";
 import InfoTooltip from "./InfoTooltip";
 
 import api from "../utils/Api.js";
+import * as auth from "../utils/auth.js";
 
 function App() {
   //данные пользователя
@@ -50,42 +50,42 @@ function App() {
 
   const history = useHistory();
 
-  const tokenCheck = () => {
-    const jwt = localStorage.getItem("jwt");
-    if (jwt) {
-      getData(jwt) //jwt на токен res на data
-        .then((res) => {
-          if (res) {
-            setLoginIn(true);
-            setUserLoginData(res.email);
-          }
+
+  useEffect(() => {
+    if (loginIn) {
+      Promise.all([api.getUserInfo(), api.getInitialCard()])
+        .then(([user, items]) => {
+          setCurrentUser(user);
+          setCards(items);
         })
-        .catch((err) => console.log(err));
+        .catch((err) => {
+          console.log(err);
+        });
     }
-  };
+  }, [loginIn]);
 
   useEffect(() => {
     tokenCheck();
   }, []);
 
-  useEffect(() => {
-    api
-    .getInitialCard()
-      .then((res) => { //был res
-        setCards(res); 
-      })
-        .catch((err) => console.error(err));
-    api
-      .getUserInfo()
-      .then((res) => {
-        setCurrentUser(res); //был res
-      })
-      .catch((err) => console.log(err));
-  }, []);
 
+  const tokenCheck = () => {
+    const jwt = localStorage.getItem('jwt');
+    if (jwt) {
+      auth
+        .getData(jwt)
+        .then((res) => {
+          if (res) {
+            setUserLoginData(res.email);
+            setLoginIn(true);
+          }
+        })
+        .catch((err) => console.log(err));
+        };
+    };
   
 
-
+  
 
   useEffect(() => {
     if (loginIn) {
@@ -188,7 +188,7 @@ function App() {
 
   const handleRegister = (data) => {
     const { email, password } = data;
-    return register(email, password)
+    auth.register(email, password)
       .then((res) => {
         if (res) {
           setIsAuth(true);
@@ -207,7 +207,7 @@ function App() {
   const handleLogin = (data) => {
     const { email, password } = data;
     setUserLoginData(email);
-    login(email, password)
+    auth.login(email, password)
       .then((res) => {
         if (res.token) {
           localStorage.setItem("jwt", res.token);
