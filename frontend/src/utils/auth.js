@@ -1,6 +1,6 @@
-//const baseUrl = 'https://api.travel.story.nomoredomains.sbs';
+export const baseUrl = 'https://api.travel.story.nomoredomains.sbs';
 
-export const baseUrl = 'http://localhost:3000';
+//export const baseUrl = 'http://localhost:3000';
 
 const getResponseData = (res) => {
     if (res.ok) {
