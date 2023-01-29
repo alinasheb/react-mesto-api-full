@@ -32,7 +32,7 @@ API реализован с валидацией запросов, логиро�
 ## Инструкция по установке:
 
 * клонирование репозитория: 
-`git clone https://github.com/goldlexx/react-mesto-api-full.git`
+`git clone https://github.com/alinasheb/react-mesto-api-full.git`
 
 * установка зависимостей
 `npm install`
